@@ -362,7 +362,7 @@ def _reset_case():
 # Header & Progress bar
 # ==========================
 st.title("Mystery Case")
-st.header("An Infectious Disease Adventure:  Fever & Sore Throat")
+st.header("An Infectious Disease Adventure: A 46-year-old with Fever & Sore Throat")
 
 st.markdown(
     """
