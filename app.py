@@ -366,7 +366,7 @@ st.header("An Infectious Disease Adventure:  Fever & Sore Throat")
 
 st.markdown(
     """
-- **Alvaro Jose Ayala, MD**
+- **Alvaro Ayala, MD**
 - **David Dickson, MD, PhD**
 - **Thomas Dieringer, MD**
 - **Natalie Medvedeva, MD**
