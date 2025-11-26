@@ -71,7 +71,7 @@ CASE = {
     "title": "Fever & Sore Throat in a 46-year-old",
     "vignette": (
         "You are now a 4th year medical student working on your emergency department rotation.\n"
-        "Your preceptor asks you to see the patient in Room B3 in the SHC ED, noting that it should have a fun differential.\n\n"
+        "Your preceptor asks you to see the patient in Room B3 in the SHC ED.\n\n"
         "A 46-year-old man presents to the Emergency Department with a one-week history of fevers and sore throat.\n"
         "He also reports noticing some 'lumps' in his neck, a significant decrease in appetite, and extreme fatigue."
     ),
@@ -83,11 +83,11 @@ CASE = {
         "SpO₂ (room air)": "99%",
     },
     "history": {
-        "Where were you born?": "“I was born in San Francisco, CA and have lived in California my whole life. I have not traveled outside the U.S.”",
+        "Where were you born?": "“I was born in San Francisco, CA and have lived in California my whole life, but I'm an avid traveler and I have been to all continents.”",
         "What do you do for work?": "“I work as a goat yoga teacher in Half Moon Bay.”",
         "Who do you live with and do you have any pets?": "“I live alone and I am a single dad to two kittens.”",
         "Are you currently sexually active?": "“Yes, I am currently sexually active with men and women with only occasional condom use.”",
-        "Other relevant details": "No known sick contacts; no recent travel; no medications; NKDA.",
+        "Other relevant details": "No known sick contacts; no recent travel; no medications; No known allergies.",
     },
     "exam": [
         "**HEENT:** Posterior oropharyngeal and tonsillar erythema, no exudates. Enlarged anterior cervical lymph nodes, mobile, mildly tender to palpation.",
@@ -137,6 +137,8 @@ CASE = {
             "WBC (cells/µL)": "100 (88% lymphocytes)",
             "Protein (mg/dL)": "105",
             "Glucose (mg/dL)": "40",
+            "CSF Gram stain": "No organisms on gram stain, moderate mononuclear cells",
+            "CSF culture": "Pending"
         },
     },
 
@@ -164,7 +166,7 @@ CASE = {
     # Step 7 Fever in the returning traveler
     "fever": {
         "vignette": (
-            "Approximately two weeks after his return from Southeast Asia and Oceania, and after partial improvement of "
+            "Approximately two weeks after his return from Southeast Asia and Oceania, and after improvement of "
             "his diarrheal illness, he now presents with **daily fevers** to 101.3°F, fatigue, and myalgias. He denies "
             "headache, cough, or current diarrhea, but endorses **abdominal pain** and notes a faint **macular rash over "
             "his torso**."
@@ -180,9 +182,9 @@ CASE = {
     # Step 8: Lost to follow-up → disseminated TB scenario
     "tb": {
         "vignette": (
-            "**Several months later:** The patient was **lost to follow-up** and has been **off ART** for many months.\n"
+            "**Several years later:** The patient was **lost to follow-up** and has been **off ART**.\n"
             "They unfortunately lost their job and health insurance and have been off ART for an unknown period of time, likely years.\n"
-            "He now presents with several months of **weight loss**, **swollen glands**, and a few weeks of **progressive shortness of breath** and a mild **headache**.\n"
+            "He now presents with several months of **weight loss**, **generaslized lymphadenopathy**, and a few weeks of **progressive shortness of breath** and a mild **headache**.\n"
         ),
         "vitals": {
             "Temperature (°F)": "100.8",
@@ -193,10 +195,10 @@ CASE = {
         },
         "exam": {
             "General": "Ill-appearing, mild respiratory distress",
-            "Lungs": "Bibasilar crackles",
+            "Lungs": "Diffuse crackles",
             "Lymph nodes": "Cervical and supraclavicular nodes enlarged, non-suppurative",
             "Abdomen": "Mild hepatosplenomegaly",
-            "Neuro": "Headache, no focal deficits",
+            "Neuro": " No nuchal rigidity, No focal deficits",
         },
         "recent_labs": {
             "CD4+ (cells/µL)": "85",
@@ -277,6 +279,7 @@ if "step7_labs" not in st.session_state:
         "zika": False,
         "chik": False,
         "blood_culture": False,
+        "rick": False,
     }
 
 if "step7_dx" not in st.session_state:
@@ -453,16 +456,11 @@ if step >= 2:
         height=100,
     )
     q2 = st.text_area(
-        "2. Which **pathogen** is most likely?",
+        "2. Which **pathogens** could potentially cause this clinical syndrome?",
         value=st.session_state.responses.get("likely_pathogen", ""),
         height=100,
     )
     q3 = st.text_area(
-        "3. What **other pathogens** could cause a similar syndrome?",
-        value=st.session_state.responses.get("other_pathogens", ""),
-        height=100,
-    )
-    q4 = st.text_area(
         "4. What **diagnostic tests** would you send?",
         value=st.session_state.responses.get("diagnostic_tests", ""),
         height=100,
@@ -472,8 +470,7 @@ if step >= 2:
         st.session_state.responses = {
             "clinical_syndrome": q1.strip(),
             "likely_pathogen": q2.strip(),
-            "other_pathogens": q3.strip(),
-            "diagnostic_tests": q4.strip(),
+            "diagnostic_tests": q3.strip(),
         }
         missing = [k for k, v in st.session_state.responses.items() if not v]
         if missing:
@@ -497,7 +494,7 @@ if step >= 3:
     st.table({"Test": list(labs.keys()), "Result": list(labs.values())})
 
     # Diagnosis prompt
-    q5 = st.text_area(
+    q4 = st.text_area(
         "5. What is your **diagnosis**?",
         value=st.session_state.responses.get("diagnosis_first", ""),
         height=120,
@@ -509,7 +506,7 @@ if step >= 3:
 
     # First button — save diagnosis and show teaching notes
     def _save_step3_show_teaching():
-        diagnosis = q5.strip()
+        diagnosis = q4.strip()
         if not diagnosis:
             st.error("Please enter your diagnosis before continuing.")
             return
@@ -853,6 +850,7 @@ if step >= 7:
         ("Zika serology", "zika"),
         ("Chikungunya serology", "chik"),
         ("Blood cultures", "blood_culture"),
+        ("Rickettsial Antibodies", "rick"),
     ]
 
     cols = st.columns(3)
@@ -1004,6 +1002,14 @@ if step >= 7:
         st.markdown("After incubation gram stain demonstrates:")
         if IMAGES.get("culture"):
             st.image(IMAGES["culture"], caption="Gram stain of blood culture", use_container_width=True)
+
+    # 12) Rickettsial antibodies
+    if st.session_state.step7_labs["rick"]:
+        st.markdown("**Rickettsial Antibodies**")
+        st.markdown(
+            "- RMSF IgG:	<1:64 \n"
+            "- RMSF IgM:	<1:64"
+)
 
     st.markdown("---")
 
@@ -1328,7 +1334,7 @@ if step >= 8:
                 "- **CD4 > 200 cells/µL**\n"
                 "  - Similar to HIV-negative patients: **typical CAP** (e.g., *Streptococcus pneumoniae*, *H. influenzae*),\n"
                 "    viral respiratory infections, **TB** can reactivate as well.\n\n"
-                "- **CD4 200–100 cells/µL**\n"
+                "- **CD4 <200 cells/µL**\n"
                 "  - **Pneumocystis jirovecii pneumonia (PJP)** — subacute dyspnea, hypoxemia, diffuse interstitial infiltrates.\n"
                 "  - **Reactivation TB** and atypical bacterial pneumonias.\n\n"
                 "- **CD4 < 100 cells/µL**\n"
@@ -1340,11 +1346,6 @@ if step >= 8:
                 "  - **Toxoplasma encephalitis** — multiple ring-enhancing lesions in basal ganglia/gray–white junction.\n"
                 "  - **CNS TB** (basilar meningitis, tuberculomas), **CMV encephalitis**, advanced HIV-associated dementia.\n"
                 "  - **CNS lymphoma**.\n\n"
-                "**Key takeaways:**\n\n"
-                "- Think about **CD4 strata** when constructing your pulmonary and CNS differential in HIV.\n"
-                "- In this case, profound immunosuppression, miliary CXR, LAD, and systemic symptoms strongly support "
-                "**disseminated TB** as the unifying diagnosis.\n"
-                "- Timing of ART in TB (especially with possible CNS involvement) is critical to minimize severe IRIS."
             )
 
         # End case: review all responses
@@ -1411,4 +1412,4 @@ with st.container():
     if st.button("🔁 Reset case (start over)"):
         _reset_case()
 
-st.caption(f" {datetime.now().year} For Educational Purposes")
+st.caption(f" {datetime.now().year} Created for Educational Purposes Only")
