@@ -136,8 +136,8 @@ CASE = {
         "lp_results": {
             "Opening pressure (cm H₂O)": "20",
             "WBC (cells/µL)": "100 (88% lymphocytes)",
-            "Protein (mg/dL)": "105",
-            "Glucose (mg/dL)": "40",
+            "Protein (mg/dL)": "42",
+            "Glucose (mg/dL)": "50",
             "CSF Gram stain": "No organisms on gram stain, moderate mononuclear cells",
             "CSF culture": "Pending"
         },
@@ -659,10 +659,10 @@ if step >= 4:
             )
 
             if st.button("Save LP interpretation"):
-                st.success(
-                "✅ Prompt antimicrobial therapy should be started in patients with high suspicion for Meningitis/Encephalitis.")
                 if not st.session_state.lp_interpretation.strip():
                     st.warning("Consider writing a brief CSF synthesis before proceeding.")
+                else:
+                    st.success("✅ Prompt antimicrobial therapy should be started in patients with high suspicion for Meningitis/Encephalitis.")
                 st.session_state.step = 5
                 st.rerun()
 
