@@ -705,7 +705,7 @@ if step >= 5:
         st.success("Final answers saved. Review the update and teaching notes below.")
 
     # Save button
-    st.button("Save Final Answers", on_click=_save_step5)
+    st.button("Save Final Answers (When instructed to do so)", on_click=_save_step5)
 
     # Only show the update paragraph + teaching notes *after* save
     if st.session_state.step5_teaching:
