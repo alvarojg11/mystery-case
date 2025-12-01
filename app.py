@@ -253,10 +253,10 @@ if "lp_interpretation" not in st.session_state:
 if "step4_choice" not in st.session_state:
     st.session_state.step4_choice = None
 # Step 5
-if st.session_state.get("lp_success"):
-        st.success("✅ Prompt antimicrobial therapy should be started in patients with high suspicion for Meningitis/Encephalitis.")
 if "step5_teaching" not in st.session_state:
     st.session_state.step5_teaching = False
+if st.session_state.get("lp_success"):
+        st.success("✅ Prompt antimicrobial therapy should be started in patients with high suspicion for Meningitis/Encephalitis.")
 # Step 6
 if "diarrhea_choice" not in st.session_state:
     st.session_state.diarrhea_choice = None
