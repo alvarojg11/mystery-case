@@ -252,6 +252,8 @@ if "lp_interpretation" not in st.session_state:
 if "step4_choice" not in st.session_state:
     st.session_state.step4_choice = None
 # Step 5
+if st.session_state.get("lp_success"):
+        st.success("✅ Prompt antimicrobial therapy should be started in patients with high suspicion for Meningitis/Encephalitis.")
 if "step5_teaching" not in st.session_state:
     st.session_state.step5_teaching = False
 # Step 6
@@ -660,16 +662,17 @@ if step >= 4:
 
         if st.button("Save LP interpretation"):
             if not st.session_state.lp_interpretation.strip():
-            st.warning("Consider writing a brief CSF synthesis before proceeding.")
+                st.warning("Consider writing a brief CSF synthesis before proceeding.")
             else:
-        # Store a flag so success persists after rerun
-            st.session_state.lp_success = True  
+                # Store a flag so success persists after rerun
+                st.session_state.lp_success = True
+                st.success(
+                "✅ Prompt antimicrobial therapy should be started in patients with high suspicion for Meningitis/Encephalitis."
+        )
 
-    st.session_state.step = 5
-    st.rerun()
+            st.session_state.step = 5
+            st.rerun()
 
-    if st.session_state.get("lp_success"):
-        st.success("✅ Prompt antimicrobial therapy should be started in patients with high suspicion for Meningitis/Encephalitis.")
 
 # ==========================
 # STEP 5 — Final questions after CSF
