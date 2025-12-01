@@ -653,7 +653,7 @@ if step >= 4:
                 st.image(IMAGES["csf"], caption="CSF / LP tubes", use_container_width=True)
 
             st.session_state.lp_interpretation = st.text_area(
-                "9. Interpret these CSF findings — what is your leading diagnosis now?",
+                "9. Interpret these CSF findings",
                 value=st.session_state.lp_interpretation,
                 height=120,
             )
