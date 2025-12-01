@@ -106,6 +106,7 @@ CASE = {
         "Blood cultures": "No growth",
         "Gonorrhea/Chlamydia NAAT": "Negative",
         "Toxoplasma IgM/IgG": "Negative",
+        "GAS rapid antigen": "Negative",
     },
 
     # Step 4 follow-up episode (3 months later)
