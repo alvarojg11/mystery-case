@@ -480,7 +480,7 @@ if step >= 2:
             st.session_state.step = 3
             st.rerun()
 
-    st.button("Let's look at the labs I ordered", on_click=_save_responses)
+    st.button("Do not click until insyructed to do so", on_click=_save_responses)
 
 # ==========================
 # STEP 3 — Initial laboratory results
