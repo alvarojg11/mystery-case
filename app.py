@@ -244,15 +244,14 @@ if "followup_responses" not in st.session_state:
 if "step3_teaching" not in st.session_state:
     st.session_state.step3_teaching = False
 # Step 4 reveal flags
+if "ct_revealed" not in st.session_state:
+    st.session_state.ct_revealed = False
 if "lp_revealed" not in st.session_state:
     st.session_state.lp_revealed = False
 if "lp_interpretation" not in st.session_state:
     st.session_state.lp_interpretation = ""
-if "lp_success" not in st.session_state:
-    st.session_state.lp_success = False
 if "step4_choice" not in st.session_state:
     st.session_state.step4_choice = None
-
 # Step 5
 if "step5_teaching" not in st.session_state:
     st.session_state.step5_teaching = False
@@ -567,10 +566,6 @@ if step >= 4:
     st.subheader("Case Continues... 3 Months Later...")
     fu = CASE["followup"]
 
-    # If LP interpretation already saved, show persistent success
-    if st.session_state.get("lp_success"):
-        st.success("✅ Prompt antimicrobial therapy should be started in patients with high suspicion for Meningitis/Encephalitis.")
-
     # Vignette
     st.markdown(fu["vignette"])
     if IMAGES.get("vignette_ams"):
@@ -601,7 +596,7 @@ if step >= 4:
     ]
 
     # Preserve choice across reruns
-    current_index = 0
+    current_index = None
     if st.session_state.step4_choice in options:
         current_index = options.index(st.session_state.step4_choice)
 
@@ -646,11 +641,11 @@ if step >= 4:
 
         # LP reveal button
         if not st.session_state.lp_revealed:
-            if st.button("📩 Show lumbar puncture (CSF) results", key="show_lp_btn"):
+            if st.button("📩 Show lumbar puncture (CSF) results"):
                 st.session_state.lp_revealed = True
                 st.rerun()
 
-        # LP results + interpretation prompt + save button
+        # LP results + interpretation prompt
         if st.session_state.lp_revealed:
             st.subheader("Lumbar Puncture Results")
             st.table({"CSF Test": list(fu["lp_results"].keys()), "Result": list(fu["lp_results"].values())})
@@ -659,21 +654,14 @@ if step >= 4:
                 st.image(IMAGES["csf"], caption="CSF / LP tubes", use_container_width=True)
 
             st.session_state.lp_interpretation = st.text_area(
-                "9. Interpret these CSF findings",
+                "9. Interpret these CSF findings — what is your leading diagnosis now?",
                 value=st.session_state.lp_interpretation,
                 height=120,
-                key="lp_interpretation_box",
             )
 
-            # This button ONLY appears after LP results are shown
-            if st.button("Save LP interpretation", key="save_lp_btn"):
+            if st.button("Save LP interpretation"):
                 if not st.session_state.lp_interpretation.strip():
                     st.warning("Consider writing a brief CSF synthesis before proceeding.")
-                else:
-                    # Store a flag so success persists on future steps
-                    st.session_state.lp_success = True
-
-                # Advance to Step 5
                 st.session_state.step = 5
                 st.rerun()
 
