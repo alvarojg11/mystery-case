@@ -659,6 +659,8 @@ if step >= 4:
             )
 
             if st.button("Save LP interpretation"):
+                if st.success(
+                "✅ Prompt antimicrobial therapy should be started in patients with high suspicion for Meningitis/Encephalitis."
                 if not st.session_state.lp_interpretation.strip():
                     st.warning("Consider writing a brief CSF synthesis before proceeding.")
                 st.session_state.step = 5
