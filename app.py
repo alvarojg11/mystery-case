@@ -1200,7 +1200,7 @@ if step >= 8:
     # CT head
     if st.session_state.step8_labs["ct_head"]:
         st.markdown("**CT head (non-contrast)**")
-        st.info("Axial contrast-enhanced CT shows enhancing masses at the right frontal brain parenchyma.")
+        st.info("Axial CT shows enhancing masses at the right frontal brain parenchyma.")
         if IMAGES.get("tb_ct_head"):
             st.image(IMAGES["tb_ct_head"], caption="CT head", use_container_width=True)
 
