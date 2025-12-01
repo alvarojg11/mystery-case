@@ -186,7 +186,7 @@ CASE = {
         "vignette": (
             "**Several years later:** The patient was **lost to follow-up** and has been **off ART**.\n"
             "They unfortunately lost their job and health insurance and have been off ART for an unknown period of time, likely years.\n"
-            "He now presents with several months of **weight loss**, **generaslized lymphadenopathy**, and a few weeks of **progressive shortness of breath** and a mild **headache**.\n"
+            "He now presents with several months of **weight loss**, **generalized lymphadenopathy**, and a few weeks of **progressive shortness of breath** and a mild **headache**.\n"
         ),
         "vitals": {
             "Temperature (°F)": "100.8",
