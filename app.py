@@ -159,7 +159,8 @@ CASE = {
                 "Two days after returning to California, he presents to the **Emergency Department** where you are rotating "
                 "with a complaint of **bloody diarrhea**. The illness began with **watery stools**, abdominal cramping, and "
                 "low-grade fevers on the day after his layover in Arizona. Hoping to self-treat, he took one dose of leftover "
-                "**ciprofloxacin** that he had at home, but the diarrhea has now progressed to **frankly bloody stools**."
+                "**ciprofloxacin** that he had at home, but the diarrhea has now progressed to **frankly bloody stools**.\n"
+                "He has been taking ART as instructed"
             ),
         },
     },
@@ -829,7 +830,7 @@ if step >= 6:
             )
 
         st.success("Great work — proceed to the next step when ready.")
-        if st.button("➡️ There is more.. "):
+        if st.button("➡️ There is more.. (Do not click until be instructed)"):
             st.session_state.step = 7
             st.rerun()
 
