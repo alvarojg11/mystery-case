@@ -647,6 +647,10 @@ if step >= 4:
 
         # LP results + interpretation prompt
         if st.session_state.lp_revealed:
+            st.success(
+                "✅ Remember starting prompt antimicrobial therapy for cases you are" 
+                " suspecting Meningitis/Encephalitis."
+            )
             st.subheader("Lumbar Puncture Results")
             st.table({"CSF Test": list(fu["lp_results"].keys()), "Result": list(fu["lp_results"].values())})
 
