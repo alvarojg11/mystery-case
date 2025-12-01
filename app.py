@@ -658,13 +658,18 @@ if step >= 4:
                 height=120,
             )
 
-            if st.button("Save LP interpretation"):
-                if not st.session_state.lp_interpretation.strip():
-                    st.warning("Consider writing a brief CSF synthesis before proceeding.")
-                else:
-                    st.success("✅ Prompt antimicrobial therapy should be started in patients with high suspicion for Meningitis/Encephalitis.")
-                st.session_state.step = 5
-                st.rerun()
+        if st.button("Save LP interpretation"):
+            if not st.session_state.lp_interpretation.strip():
+            st.warning("Consider writing a brief CSF synthesis before proceeding.")
+            else:
+        # Store a flag so success persists after rerun
+            st.session_state.lp_success = True  
+
+    st.session_state.step = 5
+    st.rerun()
+
+    if st.session_state.get("lp_success"):
+        st.success("✅ Prompt antimicrobial therapy should be started in patients with high suspicion for Meningitis/Encephalitis.")
 
 # ==========================
 # STEP 5 — Final questions after CSF
